@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio de Peintures</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>Yvette Hallet</h1>
+            </div>
+            <nav class="nav-links">
+                <a href="#portfolio">Portfolio</a>
+                <a href="#about">À propos</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+
+    <div id="zoom-modal" class="zoom" onclick="hideZoom()">
+        <img src="" alt="Image agrandie">
+    </div>
+    </main>
+    <footer>
+        &copy; 2025 Yvette Hallet. Tous droits réservés.
+    </footer>
+    <script>
+        const zoomModal = document.getElementById('zoom-modal');
+        const zoomImage = zoomModal.querySelector('img');
+
+        function showZoom(image) {
+            zoomImage.src = image.src;
+            zoomModal.classList.add('active');
+        }
+
+        function hideZoom() {
+            zoomModal.classList.remove('active');
+            zoomImage.src = ''; // Nettoyage de l'image
+        }
+    </script>
+</body>
+</html>

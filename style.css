@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap');
+
+/* --- BASE GLOBALE --- */
 body {
     font-family: 'Stack Sans Headline', Arial, sans-serif;
     margin: 0;
@@ -9,17 +11,31 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+main {
+    flex: 1;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background-color: #333;
+    color: white;
+    font-size: 14px;
+}
+
+/* --- HEADER --- */
 header {
     background-color: #333;
     color: white;
-    padding: 30px 20px; /* moins épais */
+    padding: 30px 20px;
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width:60%;
+    width: 60%;
     margin: 0 auto;
 }
 
@@ -37,12 +53,10 @@ header {
 }
 
 .nav-links a:hover {
-    color: #f5c518; /* couleur survol */
-}
-main {
-    flex: 1;
+    color: #f5c518;
 }
 
+/* --- GALERIE (index.html) --- */
 .row {
     display: flex;
     justify-content: center;
@@ -61,17 +75,9 @@ main {
     text-align: center;
 }
 
-/* .card img {
-    width: 100%;
-    height: auto;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-} */
-
-
 .card img {
-    width: 100%;        
-    height: 200px;      
+    width: 100%;
+    height: 200px;
     object-fit: contain;
     cursor: pointer;
     transition: transform 0.3s ease;
@@ -80,18 +86,23 @@ main {
 .card img:hover {
     transform: scale(1.05);
 }
+
 .card-content {
     padding: 15px;
 }
+
 .card-content h3 {
     margin: 0;
     font-size: 18px;
 }
+
 .card-content p {
     font-size: 14px;
     margin-top: 8px;
     color: #555;
 }
+
+/* --- ZOOM SUR IMAGE --- */
 .zoom {
     position: fixed;
     top: 0;
@@ -104,19 +115,73 @@ main {
     align-items: center;
     z-index: 1000;
 }
+
 .zoom img {
     max-width: 90%;
     max-height: 90%;
     border-radius: 10px;
     cursor: pointer;
 }
+
 .zoom.active {
     display: flex;
 }
-footer {
+
+/* --- PAGE À PROPOS (about.html) --- */
+
+.about-container,
+.contact-container {
+    width: 60%;
+    background-color: white;
+    border-radius: 12px;
+    padding: 40px;
+    margin: 40px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    line-height: 1.8;
+    color: #444;
+    font-size: 16px;
+    box-sizing: border-box; /* ✅ empêche le padding d’augmenter la largeur */
+}
+
+.about-container h2 {
     text-align: center;
-    padding: 15px;
-    background-color: #333;
-    color: white;
-    font-size: 14px;
+    margin-bottom: 25px;
+    color: #222;
+    font-size: 26px;
+}
+
+.about-container p {
+    text-align: justify;
+    margin-bottom: 20px;
+}
+
+.signature {
+    text-align: right;
+    font-style: italic;
+    color: #555;
+    margin-top: 30px;
+}
+
+/* --- PAGE CONTACT (contact.html) --- */
+.contact-container h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.contact-container p {
+    font-size: 16px;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+.contact-container a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.contact-container a:hover {
+    color: #f5c518;
 }

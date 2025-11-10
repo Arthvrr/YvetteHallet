@@ -1,7 +1,14 @@
 import os
 
+# Dossier où se trouve ce script
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 # Dossier où sont tes images
-image_folder = "/Users/arthurlouette/Documents/Aarthur/Code/YvetteHallet/peintures"
+image_folder = os.path.join(script_dir, "../peintures")
+
+# Vérifier que le dossier existe
+if not os.path.exists(image_folder):
+    raise FileNotFoundError(f"❌ Le dossier {image_folder} est introuvable.")
 
 # Récupérer tous les fichiers images
 images = [f for f in os.listdir(image_folder)
@@ -23,8 +30,10 @@ for i in range(0, len(images), cards_per_row):
         html_output += '    </div>\n'
     html_output += '</div>\n\n'
 
-# Écrire le HTML dans un fichier
-with open("images_gallery.html", "w", encoding="utf-8") as f:
+# 🔥 Sauvegarder le HTML dans le même dossier que le script
+output_file = os.path.join(script_dir, "images_gallery.html")
+
+with open(output_file, "w", encoding="utf-8") as f:
     f.write(html_output)
 
-print("HTML généré dans 'images_gallery.html'.")
+print(f"✅ HTML généré dans '{output_file}'. ({len(images)} images traitées)")
