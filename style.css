@@ -185,3 +185,49 @@ header {
 .contact-container a:hover {
     color: #f5c518;
 }
+
+
+/* Style pour les petits écrans */
+@media (max-width: 768px) {
+    body {
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .header-container,
+    .row,
+    .about-container,
+    .contact-container {
+        width: 95%;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .row {
+        flex-direction: column; /* empile les cartes verticalement */
+        gap: 15px;
+    }
+
+    .card {
+        width: 100%; /* chaque carte prend toute la largeur */
+    }
+
+    .card img {
+        height: auto; /* ajustement automatique de la hauteur */
+    }
+
+    .nav-links a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .about-container h2,
+    .contact-container h2 {
+        font-size: 22px;
+    }
+
+    .about-container p,
+    .contact-container p {
+        font-size: 15px;
+    }
+}
