@@ -61,12 +61,22 @@ main {
     text-align: center;
 }
 
-.card img {
+/* .card img {
     width: 100%;
     height: auto;
     cursor: pointer;
     transition: transform 0.3s ease;
+} */
+
+
+.card img {
+    width: 100%;        
+    height: 200px;      
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
+
 .card img:hover {
     transform: scale(1.05);
 }
