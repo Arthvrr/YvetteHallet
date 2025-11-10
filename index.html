@@ -7,10 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- <header>
-        <h1>Portfolio de Peintures</h1>
-        <p>Découvrez les œuvres d'Yvette Hallet</p>
-    </header> -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -24,7 +20,6 @@
         </div>
     </header>
     <main>
-        <!-- Première ligne -->
         <div class="row">
             <div class="card">
                 <img src="paintings/pics1.jpg" alt="Peinture 1" onclick="showZoom(this)">
@@ -40,9 +35,6 @@
                     <p>Description de votre deuxième peinture.</p>
                 </div>
             </div>
-        </div>
-        <!-- Deuxième ligne -->
-        <div class="row">
             <div class="card">
                 <img src="paintings/pics3.jpg" alt="Peinture 3" onclick="showZoom(this)">
                 <div class="card-content">
@@ -50,6 +42,8 @@
                     <p>Description de votre troisième peinture.</p>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="card">
                 <img src="paintings/pics4.jpg" alt="Peinture 4" onclick="showZoom(this)">
                 <div class="card-content">
@@ -57,9 +51,6 @@
                     <p>Description de votre quatrième peinture.</p>
                 </div>
             </div>
-        </div>
-        <!-- Troisième ligne -->
-        <div class="row">
             <div class="card">
                 <img src="paintings/pics5.jpg" alt="Peinture 5" onclick="showZoom(this)">
                 <div class="card-content">
@@ -75,7 +66,6 @@
                 </div>
             </div>
         </div>
-        <!-- Conteneur pour le zoom -->
         <div id="zoom-modal" class="zoom" onclick="hideZoom()">
             <img src="" alt="Image agrandie">
         </div>
