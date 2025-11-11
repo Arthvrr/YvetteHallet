@@ -206,38 +206,47 @@ header {
 }
 
 
-/* Style pour les petits écrans */
+/* --- Responsive pour petits écrans --- */
 @media (max-width: 768px) {
-    body {
-        width: 100%;
-        padding: 0 10px;
-    }
-
+    /* Réduire la largeur globale des conteneurs */
     .header-container,
     .row,
     .about-container,
     .contact-container {
-        width: 95%;
+        width: 90%;
         margin: 0 auto;
-        padding: 20px;
     }
 
-    .row {
-        flex-direction: column; /* empile les cartes verticalement */
-        gap: 15px;
+    /* Header plus compact */
+    header {
+        padding: 15px 10px;
     }
 
-    .card {
-        width: 100%; /* chaque carte prend toute la largeur */
-    }
-
-    .card img {
-        height: auto; /* ajustement automatique de la hauteur */
+    .logo h1 {
+        font-size: 18px;
     }
 
     .nav-links a {
-        display: block;
-        margin: 10px 0;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+
+    /* Footer plus compact */
+    footer {
+        padding: 15px 10px;
+        font-size: 12px;
+    }
+
+    /* Galerie : cartes plus petites et adaptées */
+    .card img {
+        height: 150px; /* réduire la hauteur */
+    }
+
+    /* Texte about/contact plus lisible sur mobile */
+    .about-container,
+    .contact-container {
+        padding: 20px;
+        font-size: 14px;
     }
 
     .about-container h2,
@@ -245,8 +254,11 @@ header {
         font-size: 22px;
     }
 
-    .about-container p,
-    .contact-container p {
-        font-size: 15px;
+    .card-content h3 {
+        font-size: 16px;
+    }
+
+    .card-content p {
+        font-size: 12px;
     }
 }
