@@ -205,10 +205,7 @@ header {
     color: #f5c518;
 }
 
-
-/* --- Responsive pour petits écrans --- */
 @media (max-width: 768px) {
-    /* Réduire la largeur globale des conteneurs */
     .header-container,
     .row,
     .about-container,
@@ -216,33 +213,51 @@ header {
         width: 90%;
         margin: 0 auto;
     }
-
-    /* Header plus compact */
     header {
         padding: 15px 10px;
     }
 
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
     .logo h1 {
         font-size: 18px;
+        text-decoration: underline;
+        text-align: center;
+    }
+
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 
     .nav-links a {
         font-size: 14px;
-        margin-left: 10px;
+        margin-left: 0;
     }
 
-    /* Footer plus compact */
     footer {
         padding: 15px 10px;
         font-size: 12px;
     }
 
-    /* Galerie : cartes plus petites et adaptées */
     .card img {
-        height: 150px; /* réduire la hauteur */
+        height: 150px;
     }
 
-    /* Texte about/contact plus lisible sur mobile */
+    .card-content h3 {
+        font-size: 16px;
+    }
+
+    .card-content p {
+        font-size: 12px;
+    }
+
     .about-container,
     .contact-container {
         padding: 20px;
@@ -252,13 +267,5 @@ header {
     .about-container h2,
     .contact-container h2 {
         font-size: 22px;
-    }
-
-    .card-content h3 {
-        font-size: 16px;
-    }
-
-    .card-content p {
-        font-size: 12px;
     }
 }
