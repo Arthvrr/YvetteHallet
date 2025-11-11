@@ -57,6 +57,17 @@ header {
     color: #f5c518;
 }
 
+.logo {
+    display: flex;
+    align-items: center; /* centre verticalement le texte avec le logo */
+    gap: 5px;           /* espace entre le logo et le texte */
+}
+
+.site-logo {
+    height: 50px;        /* ajuste la taille du logo */
+    width: auto;          /* garde les proportions */
+}
+
 /* --- GALERIE (index.html) --- */
 .row {
     display: flex;
