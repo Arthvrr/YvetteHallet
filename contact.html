@@ -4,53 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - Yvette Hallet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
 </head>
 <body>
-    <header>
+    <header class="transparent-header">
         <div class="header-container">
-            <div class="logo">
-                <img src="logo/logo.png" alt="Logo Yvette Hallet" class="site-logo">
+            <a href="index.html" style="text-decoration: none;">
+                <div class="logo">
+                <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
                 <h1>Yvette Hallet</h1>
             </div>
+            </a>
             <nav class="nav-links">
-                <a href="index.html">Portfolio</a>
+                <a href="portfolio.html">Portfolio</a>
                 <a href="about.html">À propos</a>
                 <a href="contact.html">Contact</a>
-                <a href="english/contact_en.html">🇺🇲</a>
             </nav>
         </div>
     </header>
 
     <main>
-        <div class="contact-container">
-            <h2>Contact</h2>
-            <p>Pour toute information, n’hésitez pas à contacter Yvette Hallet via les liens ci-dessous :</p>
+        <div class="contact-wrapper">
             
-            <div class="contact-links">
-                <a href="mailto:yvettehallet@gmail.com" target="_blank">
-                    📧 yvettehallet@gmail.com
-                </a><br>
-                <a href="https://www.facebook.com/profile.php?id=100016873663558" target="_blank">
-                    🌐 Profil Facebook
-                </a><br>
-                <a href="https://www.linkedin.com/in/yvette-hallet-213698125/" target="_blank">
-                    🗒️ Profil Linkedin
-                </a>
-                <p>Pour tout problème technique ou question sur le site, contactez le développeur :</p>
-                <a href="mailto:arthurlouette12@gmail.com" target="_blank">
-                    📧 arthurlouette12@gmail.com
-                </a><br>
-                <a href="https://github.com/Arthvrr/YvetteHallet" target="_blank">
-                    🌐 GitHub du site
-                </a>
+            <div class="contact-section main-contact">
+                <h2 class="portfolio-title">Contact</h2>
+                <p class="portfolio-subtitle">Pour toute information sur les œuvres ou une acquisition.</p>
+                
+                <div class="links-grid">
+                    <a href="mailto:yvettehallet@gmail.com" class="contact-card">
+                        <span class="icon">📧</span>
+                        <div class="text">
+                            <span class="label">Email</span>
+                            <span class="value">yvettehallet@gmail.com</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.facebook.com/profile.php?id=100016873663558" target="_blank" class="contact-card">
+                        <span class="icon">F</span> <div class="text">
+                            <span class="label">Facebook</span>
+                            <span class="value">Suivre Yvette sur Facebook</span>
+                        </div>
+                    </a>
+                    
+                    <a href="https://www.linkedin.com/in/yvette-hallet-213698125/" target="_blank" class="contact-card">
+                        <span class="icon">L</span>
+                        <div class="text">
+                            <span class="label">LinkedIn</span>
+                            <span class="value">Profil Professionnel</span>
+                        </div>
+                    </a>
+                </div>
             </div>
+
+            <hr class="divider">
+
+            <div class="contact-section dev-contact">
+                <h3>Support Technique & Site Web</h3>
+                <p>Site réalisé par mon petit-fils Arthur Louette. Un problème technique ?</p>
+                
+                <div class="links-grid small-grid">
+                    <a href="mailto:arthurlouette12@gmail.com" class="contact-btn">
+                        📧 Contacter le développeur
+                    </a>
+                    <a href="https://github.com/Arthvrr/YvetteHallet" target="_blank" class="contact-btn github">
+                        🌐 Voir le code sur GitHub
+                    </a>
+                </div>
+            </div>
+
         </div>
     </main>
 
     <footer>
-        &copy; 2025 Yvette Hallet. Tous droits réservés.
+        &copy; 2026 Yvette Hallet. Tous droits réservés.
     </footer>
 </body>
 </html>

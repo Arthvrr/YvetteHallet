@@ -1,282 +1,867 @@
-@import url('https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap');
+/* --- RESET ET BASES --- */
+:root {
+    --primary-color: #2c3e50;
+    --accent-color: #b76e79; /* Un vieux rose élégant pour les liens/détails */
+    --bg-color: #fcfcfc; /* Un blanc cassé très léger, moins agressif que le blanc pur */
+    --text-color: #333;
+    --font-heading: 'Playfair Display', Georgia, serif; /* Police "Art" */
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
 
-/* --- BASE GLOBALE --- */
-body {
-    font-family: 'Stack Sans Headline', Arial, sans-serif;
+* {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background-color: #f5f5f5;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
 }
 
-main {
-    flex: 1;
-}
-
-footer {
-    text-align: center;
-    padding: 25px;
-    background-color: #333;
-    color: white;
-    font-size: 14px;
+body {
+    font-family: var(--font-body);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
 }
 
 /* --- HEADER --- */
 header {
-    background-color: #333;
-    color: white;
-    padding: 30px 20px;
+    background: white;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.05); /* Ombre subtile */
+    position: sticky; /* Le menu reste accroché en haut */
+    top: 0;
+    z-index: 100;
+    padding: 1rem 0;
 }
 
 .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 60%;
-    margin: 0 auto;
-}
-
-.logo h1 {
-    margin: 0;
-    font-size: 20px;
-    text-decoration: underline;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-    font-size: 16px;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #f5c518;
+    padding: 0 20px;
 }
 
 .logo {
     display: flex;
-    align-items: center; /* centre verticalement le texte avec le logo */
-    gap: 5px;           /* espace entre le logo et le texte */
+    align-items: center;
+    gap: 15px;
 }
 
 .site-logo {
-    height: 50px;        /* ajuste la taille du logo */
-    width: auto;          /* garde les proportions */
+    height: 50px;
+    width: auto;
 }
 
-/* --- GALERIE (index.html) --- */
-.row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px auto;
-    width: 60%;
+.logo h1 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    letter-spacing: 1px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 25px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* --- INTRO --- */
+.intro-section {
+    text-align: center;
+    padding: 60px 20px 40px;
+}
+
+.portfolio-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.portfolio-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 300;
+}
+
+/* --- GALERIE (La partie importante) --- */
+main {
+    max-width: 1400px; /* On utilise plus de largeur d'écran */
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+.gallery-grid {
+    display: grid;
+    /* C'est ici la magie : 
+       Cela crée autant de colonnes que possible.
+       Chaque colonne fait minimum 300px, sinon elle passe à la ligne. */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px; /* Espace entre les images */
+    padding: 20px;
 }
 
 .card {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    background: white;
+    border-radius: 8px; /* Coins légèrement arrondis */
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: calc((100% - 2 * 10px) / 3);
-    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    aspect-ratio: 1 / 1; /* Force les cartes à être carrées pour l'uniformité (optionnel) */
+}
+
+/* Effet au survol de la souris */
+.card:hover {
+    transform: translateY(-5px); /* Monte légèrement */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.15); /* Ombre plus forte */
 }
 
 .card img {
     width: 100%;
-    height: 200px;
-    object-fit: contain;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+    height: 100%;
+    object-fit: cover; /* L'image remplit la case sans être déformée */
+    display: block;
+    transition: transform 0.5s ease;
 }
 
-.card img:hover {
-    transform: scale(1.05);
+.card:hover img {
+    transform: scale(1.05); /* Zoom subtil DANS l'image */
 }
 
-.card-content {
-    padding: 15px;
-}
-
-.card-content h3 {
-    margin: 0;
-    font-size: 18px;
-}
-
-.card-content p {
-    font-size: 14px;
-    margin-top: 8px;
-    color: #555;
-}
-
-.portfolio-title {
-    text-align: center;
-    font-size: 32px;
-    font-weight: 600;
-    color: #222;
-    margin-top: 40px;
-    margin-bottom: 30px;
-    letter-spacing: 1px;
-}
-
-.portfolio-subtitle {
-    text-align: center;
-    font-size: 18px;
-    color: #666;
-    margin-top: -10px;
-    margin-bottom: 40px;
-}
-
-/* --- ZOOM SUR IMAGE --- */
+/* --- ZOOM MODAL (Lightbox) --- */
 .zoom {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: none;
+    background: rgba(255, 255, 255, 0.95); /* Fond blanc presque opaque, très galerie d'art */
+    backdrop-filter: blur(5px); /* Effet de flou moderne */
+    display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.zoom.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
 .zoom img {
     max-width: 90%;
     max-height: 90%;
-    border-radius: 10px;
-    cursor: pointer;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
 }
 
-.zoom.active {
-    display: flex;
+.zoom.active img {
+    transform: scale(1);
 }
 
-/* --- PAGE À PROPOS (about.html) --- */
-
-.about-container,
-.contact-container {
-    width: 60%;
-    background-color: white;
-    border-radius: 12px;
-    padding: 40px;
-    margin: 40px auto;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    line-height: 1.8;
-    color: #444;
-    font-size: 16px;
-    box-sizing: border-box; /* ✅ empêche le padding d’augmenter la largeur */
-}
-
-.about-container h2 {
+/* --- FOOTER --- */
+footer {
     text-align: center;
-    margin-bottom: 25px;
-    color: #222;
-    font-size: 26px;
+    padding: 40px;
+    background: white;
+    color: #888;
+    font-size: 0.9rem;
+    border-top: 1px solid #eee;
 }
 
-.about-container p {
-    text-align: justify;
-    margin-bottom: 20px;
+/* --- STYLE PAGE CONTACT --- */
+
+.contact-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    text-align: center;
 }
 
-.signature {
-    text-align: right;
-    font-style: italic;
-    color: #555;
+.contact-section {
+    margin-bottom: 40px;
+}
+
+/* Grille pour les cartes de contact */
+.links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
     margin-top: 30px;
 }
 
-/* --- PAGE CONTACT (contact.html) --- */
-.contact-container h2 {
-    font-size: 26px;
-    margin-bottom: 20px;
-    color: #222;
+/* Aspect des cartes (boutons) */
+.contact-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
 }
 
-.contact-container p {
-    font-size: 16px;
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    border-color: var(--accent-color);
+}
+
+.contact-card .icon {
+    font-size: 2rem;
+    margin-right: 15px;
+    background: #f8f9fa;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.contact-card .text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-card .label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    color: #888;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contact-card .value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+/* Séparateur */
+.divider {
+    border: 0;
+    height: 1px;
+    background: #ddd;
+    margin: 40px auto;
+    width: 50%;
+}
+
+/* Section Développeur (plus petit) */
+.dev-contact h3 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.dev-contact p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+.small-grid {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.contact-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 30px; /* Boutons très ronds */
+    text-decoration: none;
+    color: #555;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.contact-btn.github:hover {
+    background: #333; /* Noir pour Github */
+    border-color: #333;
+}
+
+/* --- STYLE PAGE À PROPOS --- */
+
+.about-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Introduction */
+.about-intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.lead-text {
+    font-size: 1.3rem;
+    font-family: var(--font-heading);
+    color: #555;
+    font-style: italic;
+    margin-top: 20px;
+    line-height: 1.8;
+}
+
+/* Grille Matériaux / Inspiration */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-family: var(--font-heading);
+    border-bottom: 2px solid var(--accent-color);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+.info-card p {
+    margin-bottom: 15px;
     color: #444;
-    margin-bottom: 20px;
+    text-align: justify;
 }
 
-.contact-container a {
-    color: #333;
+/* Biographie Timeline */
+.biography-section h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.timeline {
+    border-left: 3px solid #eee; /* La ligne verticale */
+    padding-left: 30px;
+    margin-left: 20px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+/* Le petit point sur la ligne */
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -39px; /* Ajustement pour centrer sur la ligne */
+    top: 5px;
+    width: 15px;
+    height: 15px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    border: 3px solid white; /* Pour faire un effet anneau */
+    box-shadow: 0 0 0 1px #eee;
+}
+
+.timeline-item .date {
+    display: block;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+}
+
+/* Boite Prix & Expos */
+.awards-box {
+    background: #fdfdfd;
+    border: 1px solid #eee;
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 40px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.awards-box h4 {
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.signature-block {
+    text-align: right;
+    margin-top: 40px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-style: italic;
+}
+
+
+
+/* --- STYLE PAGE D'ACCUEIL (HOME) --- */
+
+/* 1. Hero Section (La grande bannière) */
+.hero-section {
+    position: relative;
+    height: 90vh; /* Prend 90% de la hauteur de l'écran */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    /* CHANGE L'IMAGE DE FOND ICI */
+    background-image: url('peintures/103-dialogue-80cmx80x2.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Effet parralaxe sympa */
+    margin-top: -80px; /* Pour passer sous le header si besoin */
+}
+
+/* Le voile noir pour que le texte soit lisible */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Noir à 40% d'opacité */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 20px;
+    animation: fadeIn 1.5s ease;
+}
+
+/* Typographie Hero */
+.hero-subtitle {
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+    color: #f0f0f0;
+}
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: 3.5rem; /* Très gros titre */
+    margin-bottom: 20px;
+    line-height: 1.1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.hero-text {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    font-weight: 300;
+    color: #ddd;
+}
+
+/* Boutons */
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-main, .btn-outline {
+    padding: 15px 35px;
+    border-radius: 50px;
     text-decoration: none;
     font-weight: 500;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.btn-main {
+    background-color: white;
+    color: var(--text-color);
+}
+
+.btn-main:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.btn-outline {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline:hover {
+    background-color: white;
+    color: var(--text-color);
+}
+
+/* 2. Intro Section */
+.home-intro {
+    padding: 80px 20px;
+    text-align: center;
+    background: white;
+}
+
+.container-narrow {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.home-intro h2 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.home-intro p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.8;
+}
+
+.small-divider {
+    width: 60px;
+    height: 3px;
+    background: var(--accent-color);
+    border: none;
+    margin: 30px auto 0;
+}
+
+/* 3. Preview Section */
+.home-preview {
+    padding: 0 0 80px 0;
+}
+
+.preview-grid {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    gap: 20px;
+    justify-content: center;
+}
+
+.preview-card {
+    position: relative;
+    flex: 1 1 300px; /* Responsive */
+    height: 350px;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.preview-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-overlay span {
+    color: white;
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    border: 1px solid white;
+    padding: 10px 20px;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.preview-card:hover img {
+    transform: scale(1.1);
+}
+
+.preview-card:hover .preview-overlay {
+    opacity: 1;
+}
+
+.preview-card:hover .preview-overlay span {
+    transform: translateY(0);
+}
+
+/* Animation d'entrée */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Home */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .btn-main, .btn-outline {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+
+
+
+/* --- FILTRES PORTFOLIO --- */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+.filter-btn {
+    border: none;
+    background: transparent;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #888;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.filter-btn:hover {
+    color: var(--primary-color);
+    border-color: #ddd;
+}
+
+.filter-btn.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.3);
+}
+
+/* Animation d'apparition des cartes filtrées */
+.card.show {
+    animation: fadeIn 0.5s ease;
+    display: block; /* Important pour le JS */
+}
+
+/* --- NOUVEAU MODAL (ZOOM AVEC INFOS) --- */
+.zoom {
+    background: rgba(0, 0, 0, 0.85); /* Fond plus sombre */
+    backdrop-filter: blur(8px);
+    padding: 20px;
+}
+
+.modal-content {
+    background: white;
+    max-width: 1000px;
+    width: 90%;
+    max-height: 90vh;
+    display: flex;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+/* Partie Image */
+.modal-image-container {
+    flex: 2; /* Prend 2/3 de la place */
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.modal-image-container img {
+    max-width: 100%;
+    max-height: 85vh;
+    object-fit: contain;
+    display: block;
+}
+
+/* Partie Informations (à droite) */
+.modal-info {
+    flex: 1; /* Prend 1/3 de la place */
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-left: 1px solid #eee;
+}
+
+.modal-info h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.modal-details {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.8;
+}
+
+.modal-label {
+    font-weight: bold;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    display: block;
+    margin-top: 15px;
+}
+
+/* Croix de fermeture */
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    z-index: 10;
     transition: color 0.3s;
 }
 
-.contact-container a:hover {
-    color: #f5c518;
+.close-modal:hover {
+    color: var(--accent-color);
 }
 
+/* Responsive Mobile pour le Modal */
 @media (max-width: 768px) {
-    .header-container,
-    .row,
-    .about-container,
-    .contact-container {
-        width: 90%;
-        margin: 0 auto;
+    .modal-content {
+        flex-direction: column;
+        height: auto;
+        max-height: 95vh;
+        overflow-y: auto; /* Scroll si ça dépasse */
     }
-    header {
-        padding: 15px 10px;
+    .modal-image-container {
+        height: auto;
+        padding: 0;
     }
+    .modal-image-container img {
+        max-height: 50vh;
+    }
+    .modal-info {
+        padding: 20px;
+    }
+    .close-modal {
+        color: white; /* Sur mobile, la croix est souvent sur l'image ou fond sombre */
+        text-shadow: 0 0 5px rgba(0,0,0,0.5);
+    }
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- MOBILE --- */
+@media (max-width: 768px) {
     .header-container {
         flex-direction: column;
-        align-items: center;
         gap: 15px;
     }
-
-    .logo h1 {
-        font-size: 18px;
-        text-decoration: underline;
-        text-align: center;
-    }
-
+    
     .nav-links {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-
+    
     .nav-links a {
-        font-size: 14px;
-        margin-left: 0;
+        margin: 0;
     }
 
-    footer {
-        padding: 15px 10px;
-        font-size: 12px;
-    }
-
-    .card img {
-        height: 150px;
-    }
-
-    .card-content h3 {
-        font-size: 16px;
-    }
-
-    .card-content p {
-        font-size: 12px;
-    }
-
-    .about-container,
-    .contact-container {
-        padding: 20px;
-        font-size: 14px;
-    }
-
-    .about-container h2,
-    .contact-container h2 {
-        font-size: 22px;
+    .gallery-grid {
+        gap: 15px;
+        padding: 10px;
+        /* Sur mobile, on autorise des cartes plus petites pour en voir 2 par ligne si possible */
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     }
 }

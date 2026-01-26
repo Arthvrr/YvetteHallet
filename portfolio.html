@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Yvette Hallet</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
+    
+    <style>
+        /* CSS POUR LES FILTRES */
+        .filters-wrapper {
+            background: #fff;
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: flex-end;
+            position: sticky;
+            top: 70px; /* Juste en dessous du header */
+            z-index: 90;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #999;
+            font-weight: 700;
+        }
+
+        select {
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            background: #f9f9f9;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            min-width: 160px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        select:hover { border-color: #ccc; }
+        select:focus { outline: none; border-color: var(--accent-color); background: white; }
+
+        .reset-btn {
+            background: var(--text-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            height: 40px;
+            transition: background 0.3s;
+        }
+
+        .reset-btn:hover { background: var(--accent-color); }
+
+        .results-count {
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 10px;
+        }
+
+        /* Ajustement Grid pour beaucoup d'images */
+        .gallery-grid {
+            gap: 20px;
+            padding: 0 20px 40px;
+        }
+        
+        /* Loading placeholder */
+        .card { min-height: 200px; background: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html" style="text-decoration:none; display:flex; align-items:center; gap:15px;">
+                    <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
+                    <h1>Yvette Hallet</h1>
+                </a>
+            </div>
+            <nav class="nav-links">
+                <a href="portfolio.html" class="active">Portfolio</a>
+                <a href="about.html">À propos</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters-wrapper">
+            <div class="filter-group">
+                <label for="style-select">Technique</label>
+                <select id="style-select" onchange="filterGallery()">
+                    <option value="all">Toutes les techniques</option>
+                    <option value="huile-bois">Huile sur Bois</option>
+                    <option value="huile-toile">Huile sur Toile</option>
+                    <option value="huile-carton">Huile sur Carton</option>
+                    <option value="plexi">Plexiglas</option>
+                    <option value="encre">Encres & Aquarelles</option>
+                    <option value="acrylique">Acrylique</option>
+                    <option value="stylo">Stylo & Crayons</option>
+                    <option value="sculpture">Sculpture</option>
+                    <option value="cirage">Cire & Cirage</option>
+                    <option value="collage">Collage</option>
+                    <option value="mixte">Technique Mixte</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="year-select">Période</label>
+                <select id="year-select" onchange="filterGallery()">
+                    <option value="all">Toutes les années</option>
+                    <option value="2025">2025</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2010-2019">2010 - 2019</option>
+                    <option value="2000-2009">2000 - 2009</option>
+                    <option value="1900-1999">Avant 2000</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="shape-select">Format</label>
+                <select id="shape-select" onchange="filterGallery()">
+                    <option value="all">Tous les formats</option>
+                    <option value="carre">Carré</option>
+                    <option value="paysage">Paysage (Horizontal)</option>
+                    <option value="portrait">Portrait (Vertical)</option>
+                </select>
+            </div>
+
+            <button class="reset-btn" onclick="resetFilters()">Tout voir</button>
+            <div id="count-display" class="results-count">Chargement...</div>
+        </div>
+
+        <div class="gallery-grid" id="portfolio-grid">
+
+            <div class="card" data-style="acrylique" data-year="2019" data-shape="carre" data-title="Sur Plexi Nature Silencieuse" data-tech="Acrylique">
+                <img src="peintures/acrylique-1-100x100-sur-plexi-nature-silencieuse-2019.jpg" alt="Acrylique" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="acrylique" data-year="2014" data-shape="paysage" data-title="Et Encre Sur Bois" data-tech="Acrylique">
+                <img src="peintures/acrylique-2-80x35-et-encre-sur-bois-2014.jpg" alt="Acrylique" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="acrylique" data-year="2023" data-shape="paysage" data-title="Sur Bois" data-tech="Acrylique">
+                <img src="peintures/acrylique-3-40x50-sur-bois-2023.jpg" alt="Acrylique" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="encre" data-year="1987" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-1-dimension-inconnue-sans-titre-1987.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1987" data-shape="all" data-title="Prix De La Ville De Chimay" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-2-dimension-inconnue-prix-de-la-ville-de-chimay-1987.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1987" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-3-dimension-inconnue-sans-titre-1987.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1988" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-4-dimension-inconnue-sans-titre-1988.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1988" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-5-dimension-inconnue-sans-titre-1988.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1988" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-6-dimension-inconnue-sans-titre-1988.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1987" data-shape="all" data-title="Sans Titre" data-tech="Aquarelle">
+                <img src="peintures/aquarelle-7-dimension-inconnue-sans-titre-1987.jpg" alt="Aquarelle" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="cirage" data-year="2024" data-shape="carre" data-title="Sur Carton" data-tech="Cirage">
+                <img src="peintures/cirage-1-30x30-sur-carton-2024.jpg" alt="Cirage" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="cirage" data-year="2014" data-shape="paysage" data-title="Sur Bois Protection De La Nature" data-tech="Cire">
+                <img src="peintures/cire-1-120x60-sur-bois-protection-de-la-nature-2014.jpg" alt="Cire" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="collage" data-year="2022" data-shape="paysage" data-title="Sans Titre" data-tech="Collage">
+                <img src="peintures/collage-1-30x45-sans-titre-2022.jpg" alt="Collage" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="stylo" data-year="2025" data-shape="carre" data-title="Abstraction S Sur Bois" data-tech="Crayon">
+                <img src="peintures/crayon-1-10x10-abstraction-s-sur-bois-2025.jpg" alt="Crayon" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="stylo" data-year="2025" data-shape="carre" data-title="Fruits S Sur Bois" data-tech="Crayon">
+                <img src="peintures/crayon-2-10x10-fruits-s-sur-bois-2025.jpg" alt="Crayon" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="stylo" data-year="2025" data-shape="carre" data-title="Fruits S Sur Bois" data-tech="Crayon">
+                <img src="peintures/crayon-3-10x10-fruits-s-sur-bois-2025.jpg" alt="Crayon" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="stylo" data-year="2021" data-shape="carre" data-title="Nature Silencieuse S De Couleurs Sur Carton" data-tech="Crayon">
+                <img src="peintures/crayon-4-30x30-nature-silencieuse-s-de-couleurs-sur-carton-2021.jpg" alt="Crayon" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="stylo" data-year="2021" data-shape="all" data-title="Portraits Sur Papier" data-tech="Stylo">
+                <img src="peintures/stylo-1-dimension-inconnue-portraits-sur-papier-2021.jpg" alt="Stylo" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="stylo" data-year="2020" data-shape="carre" data-title="Nature Sur Toile" data-tech="Stylo">
+                <img src="peintures/stylo-2-20x20-nature-sur-toile-2020.jpg" alt="Stylo" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="encre" data-year="1992" data-shape="portrait" data-title="Sans Titre" data-tech="Encre">
+                <img src="peintures/encre-1-60x40-sans-titre-1992.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2007" data-shape="paysage" data-title="F S Sur Papier" data-tech="Encre">
+                <img src="peintures/encre-10-30x45-f-s-sur-papier-2007.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2007" data-shape="portrait" data-title="G S Abstraction" data-tech="Encre">
+                <img src="peintures/encre-11-40x60-g-s-abstraction-2007.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2007" data-shape="portrait" data-title="H S Gestion Du Centre Ville" data-tech="Encre">
+                <img src="peintures/encre-12-40x60-h-s-gestion-du-centre-ville-2007.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2009" data-shape="portrait" data-title="I S Abstraction" data-tech="Encre">
+                <img src="peintures/encre-13-40x60-i-s-abstraction-2009.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2009" data-shape="carre" data-title="J S Sur Toiles Baie De Somme" data-tech="Encre">
+                <img src="peintures/encre-14-100x100-j-s-sur-toiles-baie-de-somme-2009.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2010" data-shape="portrait" data-title="K S Gestion Des Dechets" data-tech="Encre">
+                <img src="peintures/encre-15-60x40-k-s-gestion-des-dechets-2010.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="0" data-shape="all" data-title="Sans Titre" data-tech="Encre">
+                <img src="peintures/encre-2-dimension-inconnue-sans-titre-sans-date.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1998" data-shape="portrait" data-title="A S Prix De La Province Du Hainaut En" data-tech="Encre">
+                <img src="peintures/encre-3-60x40-a-s-prix-de-la-province-du-hainaut-en-1998.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1998" data-shape="portrait" data-title="B S" data-tech="Encre">
+                <img src="peintures/encre-4-40x60-b-s-1998.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1998" data-shape="portrait" data-title="C S" data-tech="Encre">
+                <img src="peintures/encre-5-60x40-c-s-1998.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="1999" data-shape="all" data-title="D S Cm Toujours Sur Papier Chaises Empilees" data-tech="Encre">
+                <img src="peintures/encre-6-dimension-inconnue-d-s-60-cm-40-toujours-sur-papier-chaises-empilees-1999.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2003" data-shape="portrait" data-title="E S Prix De La Province Du Hainaut" data-tech="Encre">
+                <img src="peintures/encre-7-40x60-e-s-prix-de-la-province-du-hainaut-2003.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2007" data-shape="portrait" data-title="F S Abstraction" data-tech="Encre">
+                <img src="peintures/encre-8-40x60-f-s-abstraction-2007.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="encre" data-year="2007" data-shape="portrait" data-title="F S Expose A Paris En" data-tech="Encre">
+                <img src="peintures/encre-9-40x60-f-s-expose-a-paris-en-2007.jpg" alt="Encre" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="portrait" data-title="Portrait Leon" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-1-80x120-portrait-leon-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2025" data-shape="paysage" data-title="Portraits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-10-120x40-portraits-2025.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Rech Clim" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-11-80x80-rech-clim-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Rech Clim" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-12-80x80-rech-clim-2-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Rech Clim" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-13-80x80-rech-clim-3-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="carre" data-title="Rech Clim" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-14-80x80-rech-clim-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="carre" data-title="Rechaufement Climatique" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-15-80x80-rech-climatique-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Rechauffement Climatique" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-16-80x80-rechauffement-climatique-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="all" data-title="Cn X Rech Clim" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-17-dimension-inconnue-80-cn-x-80-rech-clim-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Sans Titre" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-18-80x80-sans-titre-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2012" data-shape="carre" data-title="Rec Cl Tableaux D" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-19-60x60-rec-cl-9-tableaux-3d-2012.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2013" data-shape="portrait" data-title="Saut A La Corde" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-2-80x120-saut-a-la-corde-2013.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="Rec Cl" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-20-80x80-rec-cl-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2020" data-shape="portrait" data-title="N Fruits Cm" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-21-70x90-n-fruits-cm-2020.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="A Fruit Huile" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-22-120x120-a-fruit-1-huile-2006.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="paysage" data-title="B Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-23-60x120-b-fruits-2-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="C Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-24-100x100-c-fruits-3-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2016" data-shape="carre" data-title="D Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-25-80x80-d-fruits-4-2016.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2016" data-shape="carre" data-title="G Fruit" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-26-80x80-g-fruit-7-3-2016.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2016" data-shape="carre" data-title="H Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-27-80x80-h-fruits-8-2-2016.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2016" data-shape="carre" data-title="I Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-28-80x80-i-fruits-9-2016.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2017" data-shape="paysage" data-title="K Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-29-60x120-k-fruits-11-2017.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2013" data-shape="portrait" data-title="Portrait Arthur" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-3-80x120-portrait-arthur-2013.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2018" data-shape="carre" data-title="L Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-30-80x80-l-fruits-12-2018.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2020" data-shape="carre" data-title="M Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-31-40x40-m-fruits-13-2020.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="O Fruits Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-32-150x100-o-fruits-14-nature-silencieuse-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="paysage" data-title="P Fruits Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-33-120x70-p-fruits-15-nature-silencieuse-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2025" data-shape="paysage" data-title="R Fruits" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-34-120x90-r-fruits-17-2025.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="Solidarite" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-35-120x100-solidarite-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2010" data-shape="carre" data-title="La Terre Brule" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-36-100x100-la-terre-brule-2010.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2019" data-shape="carre" data-title="Labo" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-37-120x120-labo-2019.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2019" data-shape="carre" data-title="Labo" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-38-120x120-labo-2019.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="Expose Au Parlement Giro Wallon En" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-39-120x120-expose-au-parlement-giro-wallon-en-2006.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="portrait" data-title="Portrait Camille" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-4-80x120-portrait-camille-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="Expose Au Parlement Wallon Giro" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-40-120x120-expose-au-parlement-wallon-giro-2006.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="all" data-title="X Cm X Travail A La Chaine" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-41-2x40-cm-x-40-travail-a-la-chaine-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2022" data-shape="paysage" data-title="Quelle Planete" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-42-60x40-quelle-planete-2022.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2022" data-shape="paysage" data-title="Terre En Danger" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-43-60x40-terre-en-danger-2022.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="portrait" data-title="Crise Politique" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-44-80x100-crise-politique-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="Maniere Des Pr Flamands" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-45-80x80-maniere-des-pr-flamands-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="portrait" data-title="Ma Ferme" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-46-40x70-ma-ferme-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2013" data-shape="carre" data-title="Confitures Confitures" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-47-80x80-1-confitures-confitures-2013.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="carre" data-title="Confitures Confitures Cm" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-48-80x80-2-confitures-confitures-cm-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="portrait" data-title="Confitures Confitures" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-49-40x60-3-confitures-confitures-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2013" data-shape="portrait" data-title="Portrait Pauline" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-5-80x120-portrait-pauline-2013.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2021" data-shape="carre" data-title="Confitures" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-50-80x80-5-confitures-2021.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="paysage" data-title="Confitures" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-51-70x40-6-confitures-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2021" data-shape="portrait" data-title="D Baie De Somme Baie De Somme" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-52-60x80-d-baie-de-somme-baie-de-somme-2021.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="portrait" data-title="F Baie De Somme" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-53-60x105-f-baie-de-somme-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="portrait" data-title="G Baie De Somme" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-54-55x105-g-baie-de-somme-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2022" data-shape="paysage" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-55-80x50-animaux-2022.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="paysage" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-56-120x60-animaux-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2017" data-shape="paysage" data-title="Animaux Romeo Phobie Des Avions" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-57-60x40-animaux-romeo-phobie-des-avions-2017.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2017" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-58-40x40-animaux-2017.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-59-80x40-animaux-2-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="paysage" data-title="Portraits Maniere Des Pr Flamands" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-6-40x120-portraits-maniere-des-pr-flamands-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-60-80x40-animaux-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-62-80x80-animaux-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2021" data-shape="paysage" data-title="Chaises" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-63-120x90-chaises-2021.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-64-100x50-nature-silencieuse-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="paysage" data-title="Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-65-50x100-nature-silencieuse-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="paysage" data-title="Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-66-50x100-nature-silencieuse-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2024" data-shape="portrait" data-title="Nature Silencieuse" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-67-70x90-nature-silencieuse-2024.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2010" data-shape="paysage" data-title="Nature Silencieuse Protection Tableaux Et Cire Sur Bois" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-68-120x60-nature-silencieuse-protection-4-tableaux-et-cire-sur-bois-2010.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2018" data-shape="paysage" data-title="Nu Descendant L Escalier Inspire De Marcel Duchamp" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-69-120x60-nu-descendant-l-escalier-inspire-de-marcel-duchamp-2018.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="Prtrait Expose Au Parlement Wallon Giro Gare Au Dopage" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-7-120x120-prtrait-expose-au-parlement-wallon-giro-gare-au-dopage-2006.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-70-80x80-abstraction-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="Abstraction Maniere Des Pr Flamands" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-71-40x40-abstraction-maniere-des-pr-flamands-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-72-120x120-abstraction-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2017" data-shape="paysage" data-title="Abstraction" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-73-30x60-abstraction-2017.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2015" data-shape="carre" data-title="Abstraction Maniere Des Pr Flamands" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-74-40x40-abstraction-maniere-des-pr-flamands-2-2015.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="paysage" data-title="Abstraction Cm" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-75-40x120-abstraction-cm-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2023" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-76-80x80-abstraction-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2014" data-shape="paysage" data-title="Abstraction Cm" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-77-40x120-abstraction-cm-2014.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2025" data-shape="portrait" data-title="Animaux Chaleur Intense En Ete" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-8-100x123-animaux-chaleur-intense-en-ete-2025.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-bois" data-year="2025" data-shape="paysage" data-title="Portrait Papilou" data-tech="Huile sur Bois">
+                <img src="peintures/huile-sur-bois-9-120x60-portrait-papilou-2025.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Portrait David Bowie" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-1-100x100-portrait-david-bowie-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2023" data-shape="carre" data-title="Attente Des Meres" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-10-80x80-attente-des-meres-2023.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2023" data-shape="portrait" data-title="Sans Titre" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-11-80x90-sans-titre-2023.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="carre" data-title="Migrants" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-12-90x90-migrants-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2020" data-shape="portrait" data-title="Ombre" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-13-40x70-ombre-2020.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2016" data-shape="all" data-title="Confitures" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-14-810x90-4-confitures-2016.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="A Baie De Somme" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-15-90x90-a-baie-de-somme-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2018" data-shape="carre" data-title="B Baie De Somme" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-16-90x90-b-baie-de-somme-2018.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="carre" data-title="C Baie De Somme" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-17-90x90-c-baie-de-somme-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2018" data-shape="carre" data-title="Les Migrants" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-18-90x90-les-migrants-2018.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2018" data-shape="carre" data-title="Chaise" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-19-90x90-chaise-2018.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Portrait L Epouse De Vermeer Prefere Le Papier A L Email" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-2-80x80-portrait-l-epouse-de-vermeer-prefere-le-papier-a-l-email-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2024" data-shape="carre" data-title="Chaise" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-20-80x80-chaise-2024.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2021" data-shape="carre" data-title="Chaises Durant Le Covid" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-21-90x90-chaises-durant-le-covid-2021.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2021" data-shape="carre" data-title="Nature Silencieuse Covid" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-22-40x40-nature-silencieuse-covid-2021.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-23-40x40-nature-silencieuse-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-24-40x40-nature-silencieuse-3-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-25-40x40-nature-silencieuse-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-26-40x40-nature-silencieuse-2-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-27-40x40-nature-silencieuse-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2020" data-shape="carre" data-title="Nature Silencieuse Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-28-80x80-nature-silencieuse-nature-silencieuse-2020.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2023" data-shape="carre" data-title="Nature Silencieuse Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-29-80x80-nature-silencieuse-nature-silencieuse-2023.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="carre" data-title="Portrait De Mon Pere Efface" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-3-90x90-portrait-de-mon-pere-efface-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2016" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-30-90x90-nature-silencieuse-2016.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="carre" data-title="Nature Silencieuse Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-31-90x90-nature-silencieuse-nature-silencieuse-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2016" data-shape="carre" data-title="Nature Silencieuse Nature Silencieuse" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-32-90x90-nature-silencieuse-nature-silencieuse-2016.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2018" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-33-90x90-abstraction-2018.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2017" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-34-90x90-abstraction-2017.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2021" data-shape="portrait" data-title="Abstraction" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-35-90x80-abstraction-2021.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2018" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-36-90x90-abstraction-2018.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2025" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-4-20x20-abstraction-2025.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2020" data-shape="carre" data-title="N Fruits" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-5-40x40-n-fruits-13-2020.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2016" data-shape="carre" data-title="J Fruits" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-6-40x40-j-fruits-10-2016.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2021" data-shape="carre" data-title="Sans Titre" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-7-40x40-sans-titre-2021.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2021" data-shape="carre" data-title="Sans Titre" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-8-40x40-sans-titre-2021.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-carton" data-year="2019" data-shape="paysage" data-title="Probl Des Migrants" data-tech="Huile sur Carton">
+                <img src="peintures/huile-sur-carton-9-60x90-probl-des-migrants-2019.jpg" alt="Huile sur Carton" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="huile-toile" data-year="0" data-shape="carre" data-title="Portraits Soins Palliatfs" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-1-100x100-portraits-soins-palliatfs-sans-date.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-10-80x80-nature-silencieuse-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Dialogue" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-11-80x80x2-nature-silencieuse-dialogue-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Patience" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-12-80x80-nature-silencieuse-patience-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-13-80x80-nature-silencieuse-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Lenteur" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-14-80x80-nature-silencieuse-lenteur-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Murmurecm" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-15-80x80x2-nature-silencieuse-murmurecm-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="paysage" data-title="Portraits" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-16-120x50-portraits-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Covid" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-17-80x80-covid-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Covid" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-18-100x100-covid-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Covid" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-19-80x80-covid-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2015" data-shape="portrait" data-title="Portraits Vacances A La Mer" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-2-110x190-portraits-vacances-a-la-mer-2015.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Distenciation" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-20-80x80-distenciation-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2023" data-shape="carre" data-title="E Baie De Somme" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-21-80x80-e-baie-de-somme-2023.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2022" data-shape="paysage" data-title="Animaux La Vache Huguette" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-22-185x112-animaux-la-vache-huguette-2022.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Chaises" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-23-100x100-chaises-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2018" data-shape="carre" data-title="Chaises Marouflee" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-24-100x100-chaises-marouflee-2018.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Argumentation" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-25-80x80x4-nature-silencieuse-argumentation-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2021" data-shape="carre" data-title="Nature Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-26-100x100-nature-silencieuse-2021.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="0" data-shape="portrait" data-title="Abstraction" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-27-100x1000-abstraction-sans-date.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Abstraction" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-3-80x80-abstraction-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Fruit" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-4-100x100-fruit-16-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Fruit" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-5-100x100-fruit-16-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Joie Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-6-80x80-nature-silencieuse-joie-silencieuse-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="carre" data-title="Nature Silencieuse Partage" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-7-80x80x4-nature-silencieuse-partage-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="paysage" data-title="Nature Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-8-160x100-nature-silencieuse-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="huile-toile" data-year="2025" data-shape="paysage" data-title="Nature Silencieuse" data-tech="Huile sur Toile">
+                <img src="peintures/huile-sur-toile-9-160x80-nature-silencieuse-2025.jpg" alt="Huile sur Toile" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="plexi" data-year="2014" data-shape="paysage" data-title="Abstraction" data-tech="Plexi">
+                <img src="peintures/plexi-1-50x100-abstraction-2014.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="0" data-shape="portrait" data-title="Sans Titre" data-tech="Plexi">
+                <img src="peintures/plexi-10-40x60-sans-titre-sans-date.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="0" data-shape="portrait" data-title="Sans Titre" data-tech="Plexi">
+                <img src="peintures/plexi-11-60x40-sans-titre-sans-date.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="0" data-shape="portrait" data-title="Solidarite" data-tech="Plexi">
+                <img src="peintures/plexi-12-60x40-solidarite-sans-date.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2018" data-shape="carre" data-title="Technique Mixte Sans Chaise" data-tech="Plexi">
+                <img src="peintures/plexi-13-100x100-technique-mixte-sans-chaise-2018.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2014" data-shape="carre" data-title="C Est La Vie" data-tech="Plexi">
+                <img src="peintures/plexi-2-100x100-c-est-la-vie-2014.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2013" data-shape="carre" data-title="Ensemble" data-tech="Plexi">
+                <img src="peintures/plexi-3-100x100-ensemble-2013.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2014" data-shape="carre" data-title="Hommage A Ai Weiwei" data-tech="Plexi">
+                <img src="peintures/plexi-4-100x100-hommage-a-ai-weiwei-2014.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="0" data-shape="carre" data-title="Nature Silencieuse" data-tech="Plexi">
+                <img src="peintures/plexi-5-100x100-nature-silencieuse-sans-date.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2013" data-shape="carre" data-title="Prix En France" data-tech="Plexi">
+                <img src="peintures/plexi-6-100x100-prix-en-france-2013.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2014" data-shape="carre" data-title="Tour De Babel" data-tech="Plexi">
+                <img src="peintures/plexi-7-100x100-tour-de-babel-2014.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2012" data-shape="carre" data-title="Toute Une Histoire" data-tech="Plexi">
+                <img src="peintures/plexi-8-100x100-toute-une-histoire-2012.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="plexi" data-year="2012" data-shape="paysage" data-title="Les Femmes Solidaires" data-tech="Plexi">
+                <img src="peintures/plexi-9-100x50-les-femmes-solidaires-2012.jpg" alt="Plexi" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="sculpture" data-year="2019" data-shape="paysage" data-title="Classe Promenade" data-tech="Sculpture">
+                <img src="peintures/sculpture-1-15x20x8-classe-promenade-2019.jpg" alt="Sculpture" loading="lazy" onclick="openModal(this)">
+            </div>
+
+            <div class="card" data-style="mixte" data-year="2014" data-shape="carre" data-title="Huils Sur Bois Rech Clim" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-2-80x80-huils-sur-bois-rech-clim-2014.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="mixte" data-year="2016" data-shape="carre" data-title="E Fruits Sur Bois" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-3-80x80-e-fruits-sur-bois-2016.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="mixte" data-year="2016" data-shape="carre" data-title="F Fruits Huile Su Bois Juteuses" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-4-80x80-f-fruits-6-huile-su-bois-juteuses-2016.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="mixte" data-year="2018" data-shape="all" data-title="Chaises En Papier" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-5-dimension-inconnue-chaises-en-papier-2018.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="mixte" data-year="2014" data-shape="paysage" data-title="Nature Silencisuse" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-6-80x50-nature-silencisuse-2014.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+            <div class="card" data-style="mixte" data-year="2015" data-shape="paysage" data-title="Abstraction H Uile Sur Bois" data-tech="Technique Mixte">
+                <img src="peintures/technique-mixte-7-90x20x4-abstraction-h-uile-sur-bois-2015.jpg" alt="Technique Mixte" loading="lazy" onclick="openModal(this)">
+            </div>
+
+        </div>
+
+        <div id="zoom-modal" class="zoom" onclick="if(event.target === this) hideZoom()">
+            <div class="modal-content">
+                <span class="close-modal" onclick="hideZoom()">&times;</span>
+                <div class="modal-image-container">
+                    <img id="modal-img" src="" alt="Œuvre d'art">
+                </div>
+                <div class="modal-info">
+                    <h3 id="modal-title">Titre</h3>
+                    <span class="modal-label">Technique</span>
+                    <p id="modal-tech">Technique</p>
+                    <span class="modal-label">Année</span>
+                    <p id="modal-year">Année</p>
+                    <a href="contact.html" class="contact-btn" style="margin-top:20px; text-align:center; display:block;">Contacter l'artiste</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Yvette Hallet. Tous droits réservés.
+    </footer>
+
+    <script>
+        function filterGallery() {
+            const style = document.getElementById('style-select').value;
+            const year = document.getElementById('year-select').value;
+            const shape = document.getElementById('shape-select').value;
+            
+            const cards = document.getElementsByClassName('card');
+            let count = 0;
+
+            for (let i = 0; i < cards.length; i++) {
+                let card = cards[i];
+                let cardStyle = card.getAttribute('data-style');
+                let cardYear = parseInt(card.getAttribute('data-year')) || 0; // 0 si NaN
+                let cardShape = card.getAttribute('data-shape');
+
+                // Filtre Style
+                let matchStyle = (style === 'all') || (cardStyle === style);
+                
+                // Filtre Forme
+                let matchShape = (shape === 'all') || (cardShape === shape);
+                
+                // Filtre Année
+                let matchYear = false;
+                if (year === 'all') {
+                    matchYear = true;
+                } else if (year.includes('-')) {
+                    let [start, end] = year.split('-').map(Number);
+                    if (cardYear >= start && cardYear <= end) matchYear = true;
+                } else {
+                    if (cardYear === parseInt(year)) matchYear = true;
+                }
+
+                if (matchStyle && matchYear && matchShape) {
+                    card.style.display = 'block';
+                    count++;
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+            document.getElementById('count-display').innerText = count + " œuvre(s) affichée(s)";
+        }
+
+        function resetFilters() {
+            document.getElementById('style-select').value = 'all';
+            document.getElementById('year-select').value = 'all';
+            document.getElementById('shape-select').value = 'all';
+            filterGallery();
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('zoom-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalTech = document.getElementById('modal-tech');
+        const modalYear = document.getElementById('modal-year');
+
+        function openModal(element) {
+            const card = element.closest('.card');
+            modalImg.src = element.src;
+            modalTitle.innerText = card.getAttribute('data-title');
+            modalTech.innerText = card.getAttribute('data-tech');
+            
+            // Gestion affichage année "0" -> "Date inconnue"
+            let y = card.getAttribute('data-year');
+            modalYear.innerText = (y === "0") ? "Date inconnue" : y;
+            
+            modal.classList.add('active');
+        }
+
+        function hideZoom() {
+            modal.classList.remove('active');
+            setTimeout(() => { modalImg.src = ""; }, 300);
+        }
+
+        // Init
+        filterGallery();
+    </script>
+</body>
+</html>
