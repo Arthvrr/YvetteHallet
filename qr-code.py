@@ -3,7 +3,7 @@
 import qrcode
 
 # URL à convertir en QR code
-url = "https://www.facebook.com/profile.php?id=100016873663558"
+url = "yvettehallet.be"
 
 # Créer l'objet QR code
 qr = qrcode.QRCode(
@@ -21,6 +21,6 @@ qr.make(fit=True)
 img = qr.make_image(fill_color="black", back_color="white")
 
 # Sauvegarder l'image
-img.save("./python-scripts/qrcode.png")
+img.save("qrcode.png")
 
 print("QR code généré et sauvegardé dans qrcode.png")

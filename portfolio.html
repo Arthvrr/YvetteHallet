@@ -13,6 +13,34 @@
     
     <style>
         /* CSS POUR LES FILTRES */
+        /* Bouton pour déplier/replier */
+        .toggle-container {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: 1px solid #ddd;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
         .filters-wrapper {
             background: #fff;
             padding: 25px;
@@ -23,10 +51,27 @@
             gap: 20px;
             justify-content: center;
             align-items: flex-end;
+            /* Animation fluide */
+            transition: all 0.5s ease-in-out;
+            max-height: 500px; /* Hauteur max arbitraire pour l'animation */
+            opacity: 1;
+            overflow: hidden; /* Important pour cacher le contenu quand replié */
+            
             position: sticky;
-            top: 70px; /* Juste en dessous du header */
+            top: 70px; 
             z-index: 90;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+
+        /* Classe ajoutée quand les filtres sont cachés */
+        .filters-wrapper.collapsed {
+            max-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            opacity: 0;
+            margin-bottom: 20px;
+            border-bottom: none;
+            box-shadow: none;
         }
 
         .filter-group {
@@ -80,13 +125,11 @@
             margin-top: 10px;
         }
 
-        /* Ajustement Grid pour beaucoup d'images */
         .gallery-grid {
             gap: 20px;
             padding: 0 20px 40px;
         }
         
-        /* Loading placeholder */
         .card { min-height: 200px; background: #f4f4f4; }
     </style>
 </head>
@@ -108,7 +151,13 @@
     </header>
 
     <main>
-        <div class="filters-wrapper">
+        <div class="toggle-container">
+            <button id="toggle-filters-btn" class="toggle-btn" onclick="toggleFilters()">
+                <span>Masquer les filtres</span>
+                <span>−</span> </button>
+        </div>
+
+        <div class="filters-wrapper" id="filters-container">
             <div class="filter-group">
                 <label for="style-select">Technique</label>
                 <select id="style-select" onchange="filterGallery()">
@@ -778,6 +827,22 @@
     </footer>
 
     <script>
+        // Fonction Toggle pour afficher/masquer les filtres
+        function toggleFilters() {
+            const wrapper = document.getElementById('filters-container');
+            const btn = document.getElementById('toggle-filters-btn');
+            
+            // Toggle de la classe collapsed
+            wrapper.classList.toggle('collapsed');
+            
+            // Changement du texte du bouton
+            if (wrapper.classList.contains('collapsed')) {
+                btn.innerHTML = '<span>Afficher les filtres</span><span>+</span>';
+            } else {
+                btn.innerHTML = '<span>Masquer les filtres</span><span>−</span>';
+            }
+        }
+
         function filterGallery() {
             const style = document.getElementById('style-select').value;
             const year = document.getElementById('year-select').value;
@@ -789,16 +854,12 @@
             for (let i = 0; i < cards.length; i++) {
                 let card = cards[i];
                 let cardStyle = card.getAttribute('data-style');
-                let cardYear = parseInt(card.getAttribute('data-year')) || 0; // 0 si NaN
+                let cardYear = parseInt(card.getAttribute('data-year')) || 0;
                 let cardShape = card.getAttribute('data-shape');
 
-                // Filtre Style
                 let matchStyle = (style === 'all') || (cardStyle === style);
-                
-                // Filtre Forme
                 let matchShape = (shape === 'all') || (cardShape === shape);
                 
-                // Filtre Année
                 let matchYear = false;
                 if (year === 'all') {
                     matchYear = true;
@@ -826,7 +887,21 @@
             filterGallery();
         }
 
-        // Modal Logic
+        function checkUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const styleParam = urlParams.get('style');
+
+            if (styleParam) {
+                const selectElement = document.getElementById('style-select');
+                if (selectElement) {
+                    selectElement.value = styleParam;
+                    filterGallery();
+                }
+            } else {
+                filterGallery();
+            }
+        }
+
         const modal = document.getElementById('zoom-modal');
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
@@ -838,11 +913,8 @@
             modalImg.src = element.src;
             modalTitle.innerText = card.getAttribute('data-title');
             modalTech.innerText = card.getAttribute('data-tech');
-            
-            // Gestion affichage année "0" -> "Date inconnue"
             let y = card.getAttribute('data-year');
             modalYear.innerText = (y === "0") ? "Date inconnue" : y;
-            
             modal.classList.add('active');
         }
 
@@ -851,8 +923,7 @@
             setTimeout(() => { modalImg.src = ""; }, 300);
         }
 
-        // Init
-        filterGallery();
+        window.onload = checkUrlParams;
     </script>
 </body>
 </html>

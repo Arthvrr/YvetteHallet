@@ -13,24 +13,25 @@
     <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
 </head>
 <body class="home-page"> 
+    
     <header class="transparent-header">
         <div class="header-container">
             <a href="index.html" style="text-decoration: none;">
                 <div class="logo">
-                <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
-                <h1>Yvette Hallet</h1>
-            </div>
+                    <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
+                    <h1>Yvette Hallet</h1>
+                </div>
             </a>
             <nav class="nav-links">
                 <a href="portfolio.html">Portfolio</a>
                 <a href="about.html">À propos</a>
                 <a href="contact.html">Contact</a>
-            </nav>
+                </nav>
         </div>
     </header>
 
     <main>
-        <section class="hero-section">
+        <section class="hero-section" style="background-image: url('peintures/huile-sur-toile-11-80x80x2-nature-silencieuse-dialogue-2025.jpg');">
             <div class="hero-overlay"></div>
             <div class="hero-content">
                 <h2 class="hero-subtitle">Peinture sur Carton & Plexiglas</h2>
@@ -58,30 +59,36 @@
 
         <section class="home-preview">
             <div class="preview-grid">
-                <a href="portfolio.html" class="preview-card">
-                    <img src="peintures/huile-sur-toile-6-80x80-nature-silencieuse-joie-silencieuse-2025.jpg" alt="Joie Silencieuse">
+                
+                <a href="portfolio.html?style=huile-toile" class="preview-card">
+                    <img src="peintures/huile-sur-toile-6-80x80-nature-silencieuse-joie-silencieuse-2025.jpg" alt="Joie Silencieuse" loading="lazy">
                     <div class="preview-overlay">
-                        <span>Découvrir la Galerie</span>
+                        <span>Huile sur Toile</span>
                     </div>
                 </a>
-                <a href="portfolio.html" class="preview-card">
-                    <img src="peintures/plexi-4-100x100-hommage-a-ai-weiwei-2014.jpg" alt="Plexi">
+                
+                <a href="portfolio.html?style=plexi" class="preview-card">
+                    <img src="peintures/plexi-4-100x100-hommage-a-ai-weiwei-2014.jpg" alt="Plexi" loading="lazy">
                     <div class="preview-overlay">
                         <span>Plexiglas</span>
                     </div>
                 </a>
-                <a href="portfolio.html" class="preview-card">
-                    <img src="peintures/huile-sur-carton-9-60x90-probl-des-migrants-2019.jpg" alt="Huile sur carton">
+                
+                <a href="portfolio.html?style=huile-carton" class="preview-card">
+                    <img src="peintures/huile-sur-carton-9-60x90-probl-des-migrants-2019.jpg" alt="Huile sur carton" loading="lazy">
                     <div class="preview-overlay">
                         <span>Huile sur Carton</span>
                     </div>
                 </a>
+
             </div>
         </section>
     </main>
 
     <footer>
-        &copy; 2026 Yvette Hallet. Tous droits réservés.
+        <p class="text-slate-600 text-sm font-medium">
+            &copy; 2026 Yvette Hallet. Fait avec passion en Belgique 🇧🇪
+        </p>
     </footer>
 
 </body>

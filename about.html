@@ -11,15 +11,29 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
+
+    <style>
+        /* Style pour la photo de profil (identique à la page contact) */
+        .profile-pic {
+            width: 180px; /* Un peu plus grand que sur contact pour la bio */
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border: 5px solid white;
+        }
+    </style>
 </head>
 <body>
     <header class="transparent-header">
         <div class="header-container">
             <a href="index.html" style="text-decoration: none;">
                 <div class="logo">
-                <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
-                <h1>Yvette Hallet</h1>
-            </div>
+                    <img src="logo/logo_black.png" alt="Logo Yvette Hallet" class="site-logo">
+                    <h1>Yvette Hallet</h1>
+                </div>
             </a>
             <nav class="nav-links">
                 <a href="portfolio.html">Portfolio</a>
@@ -32,10 +46,12 @@
     <main>
         <div class="about-wrapper">
             
+            <img src="peintures/pp.jpeg" alt="Yvette Hallet" class="profile-pic">
+
             <div class="about-intro">
                 <h2 class="portfolio-title">L'Art sans contrainte</h2>
                 <p class="lead-text">
-                    "C'est sans aucune contrainte artistique que je crée des œuvres colorées, racontant des histoires à travers la texture et la matière."
+                    "C'est sans aucune contrainte artistique qu'Yvette Hallet crée des œuvres colorées, racontant des histoires à travers la texture et la matière."
                 </p>
             </div>
 
@@ -43,7 +59,7 @@
                 <div class="info-card">
                     <h3>🎨 Matériaux & Technique</h3>
                     <p>
-                        Mon support favori depuis 5 ans est le <strong>carton de récupération</strong>. J'apprécie sa texture, son satiné et cet effet « peau usée » qui relate déjà une histoire. Je peins également sur toile, bois et plexiglas.
+                        <strong>Son</strong> support favori depuis 5 ans est le <strong>carton de récupération</strong>. <strong>Elle</strong> apprécie sa texture, son satiné et cet effet « peau usée » qui relate déjà une histoire. <strong>Elle</strong> peint également sur toile, bois et plexiglas.
                     </p>
                     <p>
                         Le carton est travaillé à l'huile, tandis que le plexiglas exige l'immédiateté de l'acrylique : le geste doit être rapide, parfois imparfait, sans rémission possible.
@@ -53,10 +69,10 @@
                 <div class="info-card">
                     <h3>🌍 Inspiration & Thèmes</h3>
                     <p>
-                        J'aime redonner vie aux natures mortes, mais je suis aussi profondément touchée par les sujets de société, comme la question des migrants.
+                        <strong>L'artiste</strong> aime redonner vie aux natures mortes, mais <strong>elle</strong> est aussi profondément touchée par les sujets de société, comme la question des migrants.
                     </p>
                     <p>
-                        À travers mes œuvres, j'exprime mes joies et mes colères. La couleur est mon langage, notamment le rouge et des gris colorés que je crée moi-même pour apporter de la douceur.
+                        À travers <strong>ses</strong> œuvres, <strong>elle</strong> exprime <strong>ses</strong> joies et <strong>ses</strong> colères. La couleur est <strong>son</strong> langage, notamment le rouge et des gris colorés <strong>qu'elle</strong> crée <strong>elle-même</strong> pour apporter de la douceur.
                     </p>
                 </div>
             </div>
@@ -106,7 +122,9 @@
     </main>
 
     <footer>
-        &copy; 2026 Yvette Hallet. Tous droits réservés.
+        <p class="text-slate-600 text-sm font-medium">
+            &copy; 2026 Yvette Hallet. Fait avec passion en Belgique 🇧🇪
+        </p>
     </footer>
 </body>
 </html>
