@@ -13,7 +13,6 @@
     
     <style>
         /* CSS POUR LES FILTRES */
-        /* Bouton pour déplier/replier */
         .toggle-container {
             text-align: center;
             margin-top: 20px;
@@ -51,11 +50,10 @@
             gap: 20px;
             justify-content: center;
             align-items: flex-end;
-            /* Animation fluide */
             transition: all 0.5s ease-in-out;
-            max-height: 500px; /* Hauteur max arbitraire pour l'animation */
+            max-height: 500px; 
             opacity: 1;
-            overflow: hidden; /* Important pour cacher le contenu quand replié */
+            overflow: hidden; 
             
             position: sticky;
             top: 70px; 
@@ -63,7 +61,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
-        /* Classe ajoutée quand les filtres sont cachés */
         .filters-wrapper.collapsed {
             max-height: 0;
             padding-top: 0;
@@ -162,10 +159,11 @@
                 <label for="style-select">Technique</label>
                 <select id="style-select" onchange="filterGallery()">
                     <option value="all">Toutes les techniques</option>
+                    <option value="acrylique-plexi">Acrylique sur Plexiglas</option>
                     <option value="huile-bois">Huile sur Bois</option>
                     <option value="huile-toile">Huile sur Toile</option>
                     <option value="huile-carton">Huile sur Carton</option>
-                    <option value="plexi">Plexiglas</option>
+                    <option value="plexi">Plexiglas (Autres)</option>
                     <option value="encre">Encres & Aquarelles</option>
                     <option value="acrylique">Acrylique</option>
                     <option value="stylo">Stylo & Crayons</option>
@@ -180,6 +178,7 @@
                 <label for="year-select">Période</label>
                 <select id="year-select" onchange="filterGallery()">
                     <option value="all">Toutes les années</option>
+                    <option value="2026">2026</option>
                     <option value="2025">2025</option>
                     <option value="2024">2024</option>
                     <option value="2023">2023</option>
@@ -207,6 +206,42 @@
         </div>
 
         <div class="gallery-grid" id="portfolio-grid">
+
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Le premier Puzzle" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-1-50x70x3-le-premier-puzzle-2026.jpg" alt="Le premier Puzzle" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Wait For A Place" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-2-50x70x3-wait-for-a-place-2026.jpg" alt="Wait For A Place" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Unity" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-3-50x70x3-unity-2026.jpg" alt="Unity" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Vitrail Ludique!" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-4-50x70x3-vitrail-ludique-2026.jpg" alt="Vitrail Ludique" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="A Path Finally Open" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-5-50x70x3-a-path-finally-open-2026.jpg" alt="A Path Finally Open" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="paysage" data-title="Women Solidarity" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-6-60x40x3-women-solidarity-2026.jpg" alt="Women Solidarity" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Compromise" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-7-40x60x3-compromise-2026.jpg" alt="Compromise" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Réduit Computer" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-8-40x60x3-reduit-computer-2026.jpg" alt="Réduit Computer" loading="lazy" onclick="openModal(this)">
+            </div>
+            
+            <div class="card" data-style="acrylique-plexi" data-year="2026" data-shape="portrait" data-title="Insouciance" data-tech="Acrylique sur Plexiglas">
+                <img src="peintures/acrylique-plexi-9-40x60x3-insouciance-2026.jpg" alt="Insouciance" loading="lazy" onclick="openModal(this)">
+            </div>
 
             <div class="card" data-style="acrylique" data-year="2019" data-shape="carre" data-title="Sur Plexi Nature Silencieuse" data-tech="Acrylique">
                 <img src="peintures/acrylique-1-100x100-sur-plexi-nature-silencieuse-2019.jpg" alt="Acrylique" loading="lazy" onclick="openModal(this)">
@@ -488,7 +523,7 @@
                 <img src="peintures/huile-sur-bois-60-80x40-animaux-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
-                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
                 <img src="peintures/huile-sur-bois-62-80x80-animaux-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
@@ -823,19 +858,42 @@
     </main>
 
     <footer>
-        &copy; 2026 Yvette Hallet. Tous droits réservés.
+        <p class="text-slate-600 text-sm font-medium">
+            &copy; 2026 Yvette Hallet. Fait avec passion en Belgique 🇧🇪
+        </p>
     </footer>
 
     <script>
+        // --- NOUVEAU : Fonction pour trier par année (les plus récentes d'abord) ---
+        function sortGalleryByYear() {
+            const grid = document.getElementById('portfolio-grid');
+            // Récupère toutes les cartes sous forme de tableau
+            const cards = Array.from(grid.getElementsByClassName('card'));
+
+            // Trie le tableau
+            cards.sort((a, b) => {
+                let yearA = parseInt(a.getAttribute('data-year')) || 0;
+                let yearB = parseInt(b.getAttribute('data-year')) || 0;
+
+                // On met les années "0" (inconnues) tout à la fin
+                if (yearA === 0) yearA = -1;
+                if (yearB === 0) yearB = -1;
+
+                // Tri décroissant (ex: 2026 avant 2025)
+                return yearB - yearA;
+            });
+
+            // Réinjecte les cartes triées dans la grille HTML
+            cards.forEach(card => grid.appendChild(card));
+        }
+
         // Fonction Toggle pour afficher/masquer les filtres
         function toggleFilters() {
             const wrapper = document.getElementById('filters-container');
             const btn = document.getElementById('toggle-filters-btn');
             
-            // Toggle de la classe collapsed
             wrapper.classList.toggle('collapsed');
             
-            // Changement du texte du bouton
             if (wrapper.classList.contains('collapsed')) {
                 btn.innerHTML = '<span>Afficher les filtres</span><span>+</span>';
             } else {
@@ -923,7 +981,11 @@
             setTimeout(() => { modalImg.src = ""; }, 300);
         }
 
-        window.onload = checkUrlParams;
+        // --- MODIFIÉ : Au chargement de la page, on trie D'ABORD, puis on lance les filtres
+        window.onload = function() {
+            sortGalleryByYear();
+            checkUrlParams();
+        };
     </script>
 </body>
 </html>
