@@ -12,7 +12,7 @@
     <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
     
     <style>
-        /* CSS POUR LES FILTRES */
+        /* CSS POUR LES FILTRES ET LA RECHERCHE */
         .toggle-container {
             text-align: center;
             margin-top: 20px;
@@ -85,20 +85,23 @@
             font-weight: 700;
         }
 
-        select {
+        select, #search-input {
             padding: 10px 15px;
             border: 1px solid #e0e0e0;
             border-radius: 4px;
             background: #f9f9f9;
             font-family: var(--font-body);
             font-size: 0.9rem;
-            min-width: 160px;
-            cursor: pointer;
             transition: all 0.2s;
         }
 
+        select { min-width: 160px; cursor: pointer; }
         select:hover { border-color: #ccc; }
-        select:focus { outline: none; border-color: var(--accent-color); background: white; }
+        select:focus, #search-input:focus { outline: none; border-color: var(--accent-color); background: white; }
+        
+        #search-input {
+            min-width: 220px;
+        }
 
         .reset-btn {
             background: var(--text-color);
@@ -151,10 +154,16 @@
         <div class="toggle-container">
             <button id="toggle-filters-btn" class="toggle-btn" onclick="toggleFilters()">
                 <span>Masquer les filtres</span>
-                <span>−</span> </button>
+                <span>−</span> 
+            </button>
         </div>
 
         <div class="filters-wrapper" id="filters-container">
+            <div class="filter-group" style="flex-grow: 1; max-width: 300px;">
+                <label for="search-input">Recherche</label>
+                <input type="text" id="search-input" placeholder="Titre de l'œuvre..." oninput="filterGallery()" autocomplete="off">
+            </div>
+
             <div class="filter-group">
                 <label for="style-select">Technique</label>
                 <select id="style-select" onchange="filterGallery()">
@@ -447,7 +456,7 @@
             <div class="card" data-style="huile-bois" data-year="2019" data-shape="carre" data-title="Labo" data-tech="Huile sur Bois">
                 <img src="peintures/huile-sur-bois-38-120x120-labo-2019.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
-            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="Cyclistes au Giro" data-tech="Huile sur Bois">
+            <div class="card" data-style="huile-bois" data-year="2006" data-shape="carre" data-title="Expose Au Parlement Giro Wallon En" data-tech="Huile sur Bois">
                 <img src="peintures/huile-sur-bois-39-120x120-expose-au-parlement-giro-wallon-en-2006.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2014" data-shape="portrait" data-title="Portrait Camille" data-tech="Huile sur Bois">
@@ -523,7 +532,7 @@
                 <img src="peintures/huile-sur-bois-60-80x40-animaux-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
-                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy onclick="openModal(this)">
+                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux" data-tech="Huile sur Bois">
                 <img src="peintures/huile-sur-bois-62-80x80-animaux-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
@@ -849,8 +858,13 @@
                     <h3 id="modal-title">Titre</h3>
                     <span class="modal-label">Technique</span>
                     <p id="modal-tech">Technique</p>
+                    
+                    <span class="modal-label">Dimensions</span>
+                    <p id="modal-dim">Dimensions</p>
+                    
                     <span class="modal-label">Année</span>
                     <p id="modal-year">Année</p>
+                    
                     <a href="contact.html" class="contact-btn" style="margin-top:20px; text-align:center; display:block;">Contacter l'artiste</a>
                 </div>
             </div>
@@ -864,30 +878,25 @@
     </footer>
 
     <script>
-        // --- NOUVEAU : Fonction pour trier par année (les plus récentes d'abord) ---
+        // --- Fonction pour trier par année (les plus récentes d'abord) ---
         function sortGalleryByYear() {
             const grid = document.getElementById('portfolio-grid');
-            // Récupère toutes les cartes sous forme de tableau
             const cards = Array.from(grid.getElementsByClassName('card'));
 
-            // Trie le tableau
             cards.sort((a, b) => {
                 let yearA = parseInt(a.getAttribute('data-year')) || 0;
                 let yearB = parseInt(b.getAttribute('data-year')) || 0;
 
-                // On met les années "0" (inconnues) tout à la fin
                 if (yearA === 0) yearA = -1;
                 if (yearB === 0) yearB = -1;
 
-                // Tri décroissant (ex: 2026 avant 2025)
                 return yearB - yearA;
             });
 
-            // Réinjecte les cartes triées dans la grille HTML
             cards.forEach(card => grid.appendChild(card));
         }
 
-        // Fonction Toggle pour afficher/masquer les filtres
+        // --- Fonction Toggle pour afficher/masquer les filtres ---
         function toggleFilters() {
             const wrapper = document.getElementById('filters-container');
             const btn = document.getElementById('toggle-filters-btn');
@@ -901,10 +910,14 @@
             }
         }
 
+        // --- Fonction principale de filtrage (mise à jour avec la recherche) ---
         function filterGallery() {
             const style = document.getElementById('style-select').value;
             const year = document.getElementById('year-select').value;
             const shape = document.getElementById('shape-select').value;
+            
+            // NOUVEAU : On récupère ce que l'utilisateur a tapé
+            const searchQuery = document.getElementById('search-input').value.toLowerCase();
             
             const cards = document.getElementsByClassName('card');
             let count = 0;
@@ -914,9 +927,13 @@
                 let cardStyle = card.getAttribute('data-style');
                 let cardYear = parseInt(card.getAttribute('data-year')) || 0;
                 let cardShape = card.getAttribute('data-shape');
+                
+                // NOUVEAU : On vérifie si le titre de la carte contient la recherche
+                let cardTitle = card.getAttribute('data-title').toLowerCase();
 
                 let matchStyle = (style === 'all') || (cardStyle === style);
                 let matchShape = (shape === 'all') || (cardShape === shape);
+                let matchSearch = cardTitle.includes(searchQuery);
                 
                 let matchYear = false;
                 if (year === 'all') {
@@ -928,7 +945,8 @@
                     if (cardYear === parseInt(year)) matchYear = true;
                 }
 
-                if (matchStyle && matchYear && matchShape) {
+                // NOUVEAU : On ajoute matchSearch aux conditions d'affichage
+                if (matchStyle && matchYear && matchShape && matchSearch) {
                     card.style.display = 'block';
                     count++;
                 } else {
@@ -938,7 +956,9 @@
             document.getElementById('count-display').innerText = count + " œuvre(s) affichée(s)";
         }
 
+        // --- Fonction de réinitialisation ---
         function resetFilters() {
+            document.getElementById('search-input').value = ''; // NOUVEAU : On vide la recherche
             document.getElementById('style-select').value = 'all';
             document.getElementById('year-select').value = 'all';
             document.getElementById('shape-select').value = 'all';
@@ -964,6 +984,7 @@
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         const modalTech = document.getElementById('modal-tech');
+        const modalDim = document.getElementById('modal-dim'); // NOUVEAU : Pour afficher la dimension
         const modalYear = document.getElementById('modal-year');
 
         function openModal(element) {
@@ -971,6 +992,19 @@
             modalImg.src = element.src;
             modalTitle.innerText = card.getAttribute('data-title');
             modalTech.innerText = card.getAttribute('data-tech');
+            
+            // NOUVEAU : Extraction intelligente des dimensions depuis le nom du fichier
+            const imgSrc = element.getAttribute('src');
+            // Recherche un format comme "50x70" ou "50x70x3" dans le nom du fichier
+            const dimMatch = imgSrc.match(/\d+x\d+(?:x\d+)?/i);
+            
+            if (dimMatch) {
+                // Remplace les 'x' par ' x ' pour que ce soit plus joli (ex: 50 x 70 x 3 cm)
+                modalDim.innerText = dimMatch[0].replace(/x/gi, ' x ') + ' cm';
+            } else {
+                modalDim.innerText = "Non spécifiées";
+            }
+            
             let y = card.getAttribute('data-year');
             modalYear.innerText = (y === "0") ? "Date inconnue" : y;
             modal.classList.add('active');
@@ -981,7 +1015,7 @@
             setTimeout(() => { modalImg.src = ""; }, 300);
         }
 
-        // --- MODIFIÉ : Au chargement de la page, on trie D'ABORD, puis on lance les filtres
+        // Au chargement de la page
         window.onload = function() {
             sortGalleryByYear();
             checkUrlParams();
