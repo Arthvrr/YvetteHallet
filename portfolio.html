@@ -12,11 +12,21 @@
     <link rel="icon" type="image/x-icon" href="logo/logo_black.ico">
     
     <style>
+        /* --- NOUVEAU : LA SECTION QUI RESTE COLLÉE EN HAUT --- */
+        .sticky-section {
+            position: sticky;
+            top: 70px; 
+            z-index: 90;
+            background: #ffffff; /* Fond blanc pour cacher les peintures qui défilent derrière */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            border-bottom: 1px solid #eee;
+            margin-bottom: 40px;
+        }
+
         /* CSS POUR LES FILTRES ET LA RECHERCHE */
         .toggle-container {
             text-align: center;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            padding: 20px 0 15px 0; /* On utilise du padding plutôt que du margin pour le sticky */
         }
 
         .toggle-btn {
@@ -41,10 +51,7 @@
         }
 
         .filters-wrapper {
-            background: #fff;
-            padding: 25px;
-            border-bottom: 1px solid #eee;
-            margin-bottom: 40px;
+            padding: 0 25px 25px 25px;
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
@@ -54,11 +61,6 @@
             max-height: 500px; 
             opacity: 1;
             overflow: hidden; 
-            
-            position: sticky;
-            top: 70px; 
-            z-index: 90;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
 
         .filters-wrapper.collapsed {
@@ -66,9 +68,6 @@
             padding-top: 0;
             padding-bottom: 0;
             opacity: 0;
-            margin-bottom: 20px;
-            border-bottom: none;
-            box-shadow: none;
         }
 
         .filter-group {
@@ -131,6 +130,43 @@
         }
         
         .card { min-height: 200px; background: #f4f4f4; }
+
+        /* CSS POUR LES FLÈCHES (FIXÉES SUR LES BORDS) */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            user-select: none;
+            padding: 20px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .nav-arrow:hover {
+            color: white;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .left-arrow {
+            left: 2vw;
+        }
+
+        .right-arrow {
+            right: 2vw;
+        }
+
+        /* Ajustement pour mobile */
+        @media (max-width: 768px) {
+            .nav-arrow {
+                font-size: 2.5rem;
+                padding: 10px;
+            }
+            .left-arrow { left: 0; }
+            .right-arrow { right: 0; }
+        }
     </style>
 </head>
 <body>
@@ -151,68 +187,74 @@
     </header>
 
     <main>
-        <div class="toggle-container">
-            <button id="toggle-filters-btn" class="toggle-btn" onclick="toggleFilters()">
-                <span>Masquer les filtres</span>
-                <span>−</span> 
-            </button>
-        </div>
-
-        <div class="filters-wrapper" id="filters-container">
-            <div class="filter-group" style="flex-grow: 1; max-width: 300px;">
-                <label for="search-input">Recherche</label>
-                <input type="text" id="search-input" placeholder="Titre de l'œuvre..." oninput="filterGallery()" autocomplete="off">
+        
+        <!-- NOUVEAU : LA "BOÎTE" QUI ENGLOBE LE BOUTON ET LES FILTRES -->
+        <div class="sticky-section">
+            
+            <div class="toggle-container">
+                <button id="toggle-filters-btn" class="toggle-btn" onclick="toggleFilters()">
+                    <span>Masquer les filtres</span>
+                    <span>−</span> 
+                </button>
             </div>
 
-            <div class="filter-group">
-                <label for="style-select">Technique</label>
-                <select id="style-select" onchange="filterGallery()">
-                    <option value="all">Toutes les techniques</option>
-                    <option value="acrylique-plexi">Acrylique sur Plexiglas</option>
-                    <option value="huile-bois">Huile sur Bois</option>
-                    <option value="huile-toile">Huile sur Toile</option>
-                    <option value="huile-carton">Huile sur Carton</option>
-                    <option value="plexi">Plexiglas (Autres)</option>
-                    <option value="encre">Encres & Aquarelles</option>
-                    <option value="acrylique">Acrylique</option>
-                    <option value="stylo">Stylo & Crayons</option>
-                    <option value="sculpture">Sculpture</option>
-                    <option value="cirage">Cire & Cirage</option>
-                    <option value="collage">Collage</option>
-                    <option value="mixte">Technique Mixte</option>
-                </select>
-            </div>
+            <div class="filters-wrapper" id="filters-container">
+                <div class="filter-group" style="flex-grow: 1; max-width: 300px;">
+                    <label for="search-input">Recherche</label>
+                    <input type="text" id="search-input" placeholder="Titre de l'œuvre..." oninput="filterGallery()" autocomplete="off">
+                </div>
 
-            <div class="filter-group">
-                <label for="year-select">Période</label>
-                <select id="year-select" onchange="filterGallery()">
-                    <option value="all">Toutes les années</option>
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2010-2019">2010 - 2019</option>
-                    <option value="2000-2009">2000 - 2009</option>
-                    <option value="1900-1999">Avant 2000</option>
-                </select>
-            </div>
+                <div class="filter-group">
+                    <label for="style-select">Technique</label>
+                    <select id="style-select" onchange="filterGallery()">
+                        <option value="all">Toutes les techniques</option>
+                        <option value="acrylique-plexi">Acrylique sur Plexiglas</option>
+                        <option value="huile-bois">Huile sur Bois</option>
+                        <option value="huile-toile">Huile sur Toile</option>
+                        <option value="huile-carton">Huile sur Carton</option>
+                        <option value="plexi">Plexiglas (Autres)</option>
+                        <option value="encre">Encres & Aquarelles</option>
+                        <option value="acrylique">Acrylique</option>
+                        <option value="stylo">Stylo & Crayons</option>
+                        <option value="sculpture">Sculpture</option>
+                        <option value="cirage">Cire & Cirage</option>
+                        <option value="collage">Collage</option>
+                        <option value="mixte">Technique Mixte</option>
+                    </select>
+                </div>
 
-            <div class="filter-group">
-                <label for="shape-select">Format</label>
-                <select id="shape-select" onchange="filterGallery()">
-                    <option value="all">Tous les formats</option>
-                    <option value="carre">Carré</option>
-                    <option value="paysage">Paysage (Horizontal)</option>
-                    <option value="portrait">Portrait (Vertical)</option>
-                </select>
-            </div>
+                <div class="filter-group">
+                    <label for="year-select">Période</label>
+                    <select id="year-select" onchange="filterGallery()">
+                        <option value="all">Toutes les années</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2010-2019">2010 - 2019</option>
+                        <option value="2000-2009">2000 - 2009</option>
+                        <option value="1900-1999">Avant 2000</option>
+                    </select>
+                </div>
 
-            <button class="reset-btn" onclick="resetFilters()">Tout voir</button>
-            <div id="count-display" class="results-count">Chargement...</div>
-        </div>
+                <div class="filter-group">
+                    <label for="shape-select">Format</label>
+                    <select id="shape-select" onchange="filterGallery()">
+                        <option value="all">Tous les formats</option>
+                        <option value="carre">Carré</option>
+                        <option value="paysage">Paysage (Horizontal)</option>
+                        <option value="portrait">Portrait (Vertical)</option>
+                    </select>
+                </div>
+
+                <button class="reset-btn" onclick="resetFilters()">Tout voir</button>
+                <div id="count-display" class="results-count">Chargement...</div>
+            </div>
+            
+        </div> <!-- FIN DE LA STICKY SECTION -->
 
         <div class="gallery-grid" id="portfolio-grid">
 
@@ -532,7 +574,7 @@
                 <img src="peintures/huile-sur-bois-60-80x40-animaux-2023.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux #6" data-tech="Huile sur Bois">
-                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
+                <img src="peintures/huile-sur-bois-61-80x80-animaux-2-2009.jpg" alt="Huile sur Bois" loading="lazy onclick="openModal(this)">
             </div>
             <div class="card" data-style="huile-bois" data-year="2009" data-shape="carre" data-title="Animaux #7" data-tech="Huile sur Bois">
                 <img src="peintures/huile-sur-bois-62-80x80-animaux-2009.jpg" alt="Huile sur Bois" loading="lazy" onclick="openModal(this)">
@@ -849,11 +891,17 @@
         </div>
 
         <div id="zoom-modal" class="zoom" onclick="if(event.target === this) hideZoom()">
+            
+            <span class="nav-arrow left-arrow" onclick="prevImage(event)">&#10094;</span>
+            <span class="nav-arrow right-arrow" onclick="nextImage(event)">&#10095;</span>
+
             <div class="modal-content">
                 <span class="close-modal" onclick="hideZoom()">&times;</span>
+                
                 <div class="modal-image-container">
                     <img id="modal-img" src="" alt="Œuvre d'art">
                 </div>
+                
                 <div class="modal-info">
                     <h3 id="modal-title">Titre</h3>
                     <span class="modal-label">Technique</span>
@@ -878,7 +926,14 @@
     </footer>
 
     <script>
-        // --- Fonction pour trier par année (les plus récentes d'abord) ---
+        let currentVisibleCards = [];
+        let currentImageIndex = 0;
+
+        function updateVisibleCards() {
+            const allCards = Array.from(document.getElementsByClassName('card'));
+            currentVisibleCards = allCards.filter(card => card.style.display !== 'none');
+        }
+
         function sortGalleryByYear() {
             const grid = document.getElementById('portfolio-grid');
             const cards = Array.from(grid.getElementsByClassName('card'));
@@ -894,9 +949,9 @@
             });
 
             cards.forEach(card => grid.appendChild(card));
+            updateVisibleCards();
         }
 
-        // --- Fonction Toggle pour afficher/masquer les filtres ---
         function toggleFilters() {
             const wrapper = document.getElementById('filters-container');
             const btn = document.getElementById('toggle-filters-btn');
@@ -910,13 +965,10 @@
             }
         }
 
-        // --- Fonction principale de filtrage (mise à jour avec la recherche) ---
         function filterGallery() {
             const style = document.getElementById('style-select').value;
             const year = document.getElementById('year-select').value;
             const shape = document.getElementById('shape-select').value;
-            
-            // NOUVEAU : On récupère ce que l'utilisateur a tapé
             const searchQuery = document.getElementById('search-input').value.toLowerCase();
             
             const cards = document.getElementsByClassName('card');
@@ -927,8 +979,6 @@
                 let cardStyle = card.getAttribute('data-style');
                 let cardYear = parseInt(card.getAttribute('data-year')) || 0;
                 let cardShape = card.getAttribute('data-shape');
-                
-                // NOUVEAU : On vérifie si le titre de la carte contient la recherche
                 let cardTitle = card.getAttribute('data-title').toLowerCase();
 
                 let matchStyle = (style === 'all') || (cardStyle === style);
@@ -945,7 +995,6 @@
                     if (cardYear === parseInt(year)) matchYear = true;
                 }
 
-                // NOUVEAU : On ajoute matchSearch aux conditions d'affichage
                 if (matchStyle && matchYear && matchShape && matchSearch) {
                     card.style.display = 'block';
                     count++;
@@ -954,11 +1003,11 @@
                 }
             }
             document.getElementById('count-display').innerText = count + " œuvre(s) affichée(s)";
+            updateVisibleCards();
         }
 
-        // --- Fonction de réinitialisation ---
         function resetFilters() {
-            document.getElementById('search-input').value = ''; // NOUVEAU : On vide la recherche
+            document.getElementById('search-input').value = '';
             document.getElementById('style-select').value = 'all';
             document.getElementById('year-select').value = 'all';
             document.getElementById('shape-select').value = 'all';
@@ -984,22 +1033,19 @@
         const modalImg = document.getElementById('modal-img');
         const modalTitle = document.getElementById('modal-title');
         const modalTech = document.getElementById('modal-tech');
-        const modalDim = document.getElementById('modal-dim'); // NOUVEAU : Pour afficher la dimension
+        const modalDim = document.getElementById('modal-dim');
         const modalYear = document.getElementById('modal-year');
 
-        function openModal(element) {
-            const card = element.closest('.card');
-            modalImg.src = element.src;
+        function populateModal(card) {
+            const img = card.querySelector('img');
+            modalImg.src = img.src;
             modalTitle.innerText = card.getAttribute('data-title');
             modalTech.innerText = card.getAttribute('data-tech');
             
-            // NOUVEAU : Extraction intelligente des dimensions depuis le nom du fichier
-            const imgSrc = element.getAttribute('src');
-            // Recherche un format comme "50x70" ou "50x70x3" dans le nom du fichier
+            const imgSrc = img.getAttribute('src');
             const dimMatch = imgSrc.match(/\d+x\d+(?:x\d+)?/i);
             
             if (dimMatch) {
-                // Remplace les 'x' par ' x ' pour que ce soit plus joli (ex: 50 x 70 x 3 cm)
                 modalDim.innerText = dimMatch[0].replace(/x/gi, ' x ') + ' cm';
             } else {
                 modalDim.innerText = "Non spécifiées";
@@ -1007,6 +1053,15 @@
             
             let y = card.getAttribute('data-year');
             modalYear.innerText = (y === "0") ? "Date inconnue" : y;
+        }
+
+        function openModal(element) {
+            const card = element.closest('.card');
+            
+            updateVisibleCards();
+            currentImageIndex = currentVisibleCards.indexOf(card);
+            
+            populateModal(card);
             modal.classList.add('active');
         }
 
@@ -1015,7 +1070,34 @@
             setTimeout(() => { modalImg.src = ""; }, 300);
         }
 
-        // Au chargement de la page
+        function nextImage(event) {
+            if (event) event.stopPropagation();
+            if (currentVisibleCards.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex + 1) % currentVisibleCards.length;
+            populateModal(currentVisibleCards[currentImageIndex]);
+        }
+
+        function prevImage(event) {
+            if (event) event.stopPropagation();
+            if (currentVisibleCards.length === 0) return;
+            
+            currentImageIndex = (currentImageIndex - 1 + currentVisibleCards.length) % currentVisibleCards.length;
+            populateModal(currentVisibleCards[currentImageIndex]);
+        }
+
+        document.addEventListener('keydown', function(event) {
+            if (modal.classList.contains('active')) {
+                if (event.key === 'ArrowRight') {
+                    nextImage();
+                } else if (event.key === 'ArrowLeft') {
+                    prevImage();
+                } else if (event.key === 'Escape') {
+                    hideZoom();
+                }
+            }
+        });
+
         window.onload = function() {
             sortGalleryByYear();
             checkUrlParams();
